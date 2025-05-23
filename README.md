@@ -10,3 +10,13 @@ Currently, two official plugins are available:
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Configuration
+
+Create a `.env` file in the project root to tell the frontend where your backend API lives:
+
+```
+VITE_API_URL=http://localhost:4000/api
+```
+
+Use the `.env.example` file as a starting point. When this value is set, the app fetches project data from your backend instead of using the built-in sample dataset.
