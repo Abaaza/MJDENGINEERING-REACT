@@ -1,4 +1,5 @@
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { sampleProjects } from '../data/sampleProjects';
 import StatusBadge from '../components/StatusBadge';
 import format from 'date-fns/format';
@@ -7,8 +8,24 @@ export default function ProjectOverview() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // ⚠️ replace with real fetch when API is ready
-  const project = sampleProjects.find((p) => p.id === id);
+  const api = import.meta.env.VITE_API_URL;
+
+  const { data: project, isLoading } = useQuery({
+    queryKey: ['project', id],
+    queryFn: async () => {
+      if (!api) {
+        await new Promise((r) => setTimeout(r, 600));
+        return sampleProjects.find((p) => p.id === id);
+      }
+
+      const res = await fetch(`${api}/projects/${id}`);
+      if (res.status === 404) return null;
+      if (!res.ok) throw new Error('Failed to load project');
+      return res.json();
+    },
+  });
+
+  if (isLoading) return <p className="text-gray-500">Loading...</p>;
 
   if (!project)
     return (
