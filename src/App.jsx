@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import ProjectOverview from './pages/ProjectOverview';
 import ProjectDocuments from './pages/ProjectDocuments';
 import ProjectBoq from './pages/ProjectBoq';
+import NewProject from './pages/NewProject';
 
 const user = { name: 'Mark' }; // stub
 
@@ -21,8 +22,12 @@ export default function App() {
         <main className="p-8 space-y-6">
           <Routes>
             <Route index element={<Dashboard />} />
+            <Route path="/new-project" element={<NewProject />} />
             <Route path="/projects/:id" element={<ProjectOverview />} />
-            <Route path="/projects/:id/documents" element={<ProjectDocuments />} />
+            <Route
+              path="/projects/:id/documents"
+              element={<ProjectDocuments />}
+            />
             <Route path="/projects/:id/boq" element={<ProjectBoq />} />
             <Route path="*" element={<p className="text-gray-500">Not found</p>} />
           </Routes>
