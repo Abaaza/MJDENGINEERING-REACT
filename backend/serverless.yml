@@ -1,0 +1,30 @@
+service: mjd-backend
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: me-south-1
+  environment:
+    CONNECTION_STRING: ${env:CONNECTION_STRING}
+    JWT_SECRET:        ${env:JWT_SECRET}
+    EMAIL_USER:        ${env:EMAIL_USER}
+    EMAIL_PASS:        ${env:EMAIL_PASS}
+    JWT_REFRESH_SECRET:${env:JWT_REFRESH_SECRET}
+  httpApi:
+    cors: true
+
+functions:
+  api:
+    handler: src/handler.handler
+    events:
+      - httpApi:      # one Lambda handles every route
+          path: /{proxy+}
+          method: ANY
+
+plugins:
+  - serverless-offline   # (dev convenience)
+
+package:
+  patterns:
+    - '!node_modules/.cache/**'   #      exclude cache
