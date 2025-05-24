@@ -2,12 +2,13 @@
 import { Router } from 'express';
 import { nanoid } from 'nanoid';
 import Project from '../models/Project.js';
+import sampleProjects from '../sampleProjects.js';
 
 const router = Router();
 
 router.get('/', async (_req, res) => {
-  const projects = await Project.find().sort({ due: 1 });
-  res.json(projects);
+  // Temporary: serve sample projects instead of querying the DB
+  res.json(sampleProjects);
 });
 
 router.post('/', async (req, res) => {

@@ -4,14 +4,13 @@ import {
   UserCircleIcon,
   ArrowRightOnRectangleIcon,
 } from '@heroicons/react/24/outline';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-export default function TopBar({ user }) {
-  const navigate = useNavigate();
+export default function TopBar() {
+  const { user, logout } = useAuth();
 
   function handleLogout() {
-    // TODO – hook into real auth
-    navigate('/login');
+    logout();
   }
 
   return (
