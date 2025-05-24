@@ -2,16 +2,15 @@
 import { Router } from 'express';
 import { nanoid } from 'nanoid';
 import Project from '../models/Project.js';
-import auth from '../middlewares/auth.js';
 
 const router = Router();
 
-router.get('/', auth, async (_req, res) => {
+router.get('/', async (_req, res) => {
   const projects = await Project.find().sort({ due: 1 });
   res.json(projects);
 });
 
-router.post('/', auth, async (req, res) => {
+router.post('/', async (req, res) => {
   // normalise to an array
   const payload = Array.isArray(req.body) ? req.body : [req.body];
 
